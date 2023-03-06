@@ -18,8 +18,6 @@ public class ClickBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
-        EnemyDataTemplate.Instance.enemyHealth -= 1;
+        gameObject.GetComponent<EnemyDataTemplate>().enemyHealth -= 1;
     }
-
-
 }

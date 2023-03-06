@@ -4,21 +4,22 @@ using UnityEngine;
 
 public class EnemyDeadBehaviour : MonoBehaviour
 
-    
+
 {
     private float enemyHealth;
     // Start is called before the first frame update
     void Start()
     {
-        enemyHealth = EnemyDataTemplate.Instance.enemyHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
+        enemyHealth = gameObject.GetComponent<EnemyDataTemplate>().enemyHealth;
         if (enemyHealth <= 0)
         {
-
+            Destroy(gameObject);
+            GameManager.Instance.enemiesLeft -= 1;
         }
     }
 }
