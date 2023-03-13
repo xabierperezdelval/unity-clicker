@@ -16,10 +16,11 @@ public class EnemyDeadBehaviour : MonoBehaviour
     void Update()
     {
         enemyHealth = gameObject.GetComponent<EnemyDataTemplate>().enemyHealth;
-        if (enemyHealth <= 0)
+        if (gameObject != null && enemyHealth <= 0)
         {
             Destroy(gameObject);
             GameManager.Instance.enemiesLeft -= 1;
+            EnemySpawner.Instance.spawnPositionsBusy[gameObject.GetComponent<EnemyDataTemplate>().spawnedPos] = false;
         }
     }
 }

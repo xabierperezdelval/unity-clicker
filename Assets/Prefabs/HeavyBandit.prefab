@@ -73,6 +73,7 @@ GameObject:
   - component: {fileID: 6285593223270146001}
   - component: {fileID: -9188793831932951194}
   - component: {fileID: 6394971551410856304}
+  - component: {fileID: -2217820343185934132}
   m_Layer: 0
   m_Name: HeavyBandit
   m_TagString: HardEnemy
@@ -239,7 +240,6 @@ MonoBehaviour:
   enemyHealth: 0
   enemyAttackSpeed: 0
   enemyDamage: 0
-  enemyType: 
   difficultyLevel: 0
 --- !u!114 &6394971551410856304
 MonoBehaviour:
@@ -253,3 +253,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 717dfb9f7b49eed4b8c1d25218f5be67, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-2217820343185934132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6702303752363817419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19cefcbf81001c848b43fdcbcfe01a83, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackTimer: 0

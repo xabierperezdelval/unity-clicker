@@ -11,6 +11,8 @@ public class GameManager : MonoBehaviour
     public int moraleBonus;
     public int enemiesLeft;
     public GameObject[] spawnedEntities;
+    public GameObject[] spawnedHealthBar;
+    public GameObject[] spawnedAttackTimers;
     public TMP_Text moraleText;
     public TMP_Text enemiesLeftText;
     public TMP_Text gameOverText;
@@ -23,13 +25,15 @@ public class GameManager : MonoBehaviour
     //prevenimos m�ltiples copias/instancias
     void Awake()
     {
-    difficultyLevel = 1;
-    isGameLoopRunning = true;
-    morale = 100 + moraleBonus;
-    enemiesLeft = 10 * difficultyLevel;
+        difficultyLevel = 1;
+        isGameLoopRunning = true;
+        morale = 100 + moraleBonus;
+        enemiesLeft = 10 * difficultyLevel;
         if (Instance != null)
             Destroy(Instance);
         Instance = this;
+        gameOverText.enabled = false;
+        victoryText.enabled = false;
     }
 
     void OnDestroy()
@@ -44,22 +48,28 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         spawnedEntities = new GameObject[3];
+        spawnedAttackTimers = new GameObject[3];
+        spawnedHealthBar = new GameObject[3];
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (isGameLoopRunning) {
+        if (isGameLoopRunning)
+        {
             morale -= Time.deltaTime;
         }
         moraleText.text = "Morale: " + Mathf.FloorToInt(morale);
         enemiesLeftText.text = "Enemies left: " + enemiesLeft;
-        if (morale <= 0) {
+        if (morale < 0)
+        {
+            Debug.Log("Game over");
             morale = 0;
             isGameLoopRunning = false;
             gameOverText.enabled = true;
         }
-        if (enemiesLeft == 0) {
+        if (enemiesLeft == 0)
+        {
             isGameLoopRunning = false;
             victoryText.enabled = true;
         }
