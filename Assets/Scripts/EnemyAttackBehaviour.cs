@@ -7,6 +7,7 @@ public class EnemyAttackBehaviour : MonoBehaviour
     private float enemyAttackSpeed, enemyDamage;
     [SerializeField] private float attackTimer;
     private bool attackAllowed;
+    public AudioSource enemyAttackSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -26,7 +27,11 @@ public class EnemyAttackBehaviour : MonoBehaviour
     {
         if (attackAllowed)
         {
-            GameManager.Instance.morale -= enemyDamage;
+            enemyAttackSound.Play();
+            if (!GameManager.Instance.invencibleTimerActive && GameManager.Instance.morale < 80)
+            {
+                GameManager.Instance.morale -= enemyDamage;
+            }
             attackAllowed = false;
         }
     }
@@ -35,7 +40,7 @@ public class EnemyAttackBehaviour : MonoBehaviour
     void Update()
     {
         attackTimer -= Time.deltaTime;
-        if (attackTimer <= 0)
+        if (attackTimer <= 0 && GameManager.Instance.isGameLoopRunning)
         {
             AttackAction();
             SetAttackTimer();

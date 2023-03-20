@@ -7,6 +7,7 @@ public class EnemyDeadBehaviour : MonoBehaviour
 
 {
     private float enemyHealth;
+    public AudioSource enemyDeadSound;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +19,7 @@ public class EnemyDeadBehaviour : MonoBehaviour
         enemyHealth = gameObject.GetComponent<EnemyDataTemplate>().enemyHealth;
         if (gameObject != null && enemyHealth <= 0)
         {
+            enemyDeadSound.Play();
             Destroy(gameObject);
             GameManager.Instance.enemiesLeft -= 1;
             EnemySpawner.Instance.spawnPositionsBusy[gameObject.GetComponent<EnemyDataTemplate>().spawnedPos] = false;

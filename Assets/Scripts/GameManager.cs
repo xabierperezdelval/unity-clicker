@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Xml.Linq;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public int difficultyLevel;
+    public static int difficultyModifier = -1;
     public float morale;
     public int moraleBonus;
     public int enemiesLeft;
@@ -17,15 +19,30 @@ public class GameManager : MonoBehaviour
     public TMP_Text enemiesLeftText;
     public TMP_Text gameOverText;
     public TMP_Text victoryText;
+    public TMP_Text lootText;
+    public Canvas lootCanvas;
 
-    private bool isGameLoopRunning;
+    public bool isGameLoopRunning, invencibleTimerActive, berserkerRageActive;
 
     public static GameManager Instance { get; private set; }
 
     //prevenimos m�ltiples copias/instancias
     void Awake()
     {
-        difficultyLevel = 1;
+        if (ItemsScript.Instance.isInvencibilityActive)
+        {
+            invencibleTimerActive = true;
+        }
+        if (ItemsScript.Instance.isBerserkerActive)
+        {
+            berserkerRageActive = true;
+        }
+
+        if (ItemsScript.Instance.isMeadHornActive) {
+            moraleBonus = 50;
+        }
+        difficultyModifier++;
+        difficultyLevel = 1 + difficultyModifier;
         isGameLoopRunning = true;
         morale = 100 + moraleBonus;
         enemiesLeft = 10 * difficultyLevel;
@@ -50,6 +67,7 @@ public class GameManager : MonoBehaviour
         spawnedEntities = new GameObject[3];
         spawnedAttackTimers = new GameObject[3];
         spawnedHealthBar = new GameObject[3];
+
     }
 
     // Update is called once per frame
@@ -59,19 +77,33 @@ public class GameManager : MonoBehaviour
         {
             morale -= Time.deltaTime;
         }
-        moraleText.text = "Morale: " + Mathf.FloorToInt(morale);
-        enemiesLeftText.text = "Enemies left: " + enemiesLeft;
+        moraleText.text = "Moral: " + Mathf.FloorToInt(morale);
+        enemiesLeftText.text = "Quedan " + enemiesLeft + " enemigos";
         if (morale < 0)
         {
-            Debug.Log("Game over");
             morale = 0;
             isGameLoopRunning = false;
             gameOverText.enabled = true;
+            StartCoroutine(ReturnAutoToMenu());
         }
         if (enemiesLeft == 0)
         {
             isGameLoopRunning = false;
             victoryText.enabled = true;
+            lootCanvas.gameObject.SetActive(true);
+            StartCoroutine(GoToInventoryScreen());
         }
+    }
+
+    private IEnumerator ReturnAutoToMenu()
+    {
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("MenuScene");
+    }
+
+    private IEnumerator GoToInventoryScreen()
+    {
+        yield return new WaitForSeconds(5);
+        SceneManager.LoadScene("InventoryScene");
     }
 }

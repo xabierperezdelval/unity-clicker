@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class ClickBehaviour : MonoBehaviour
 {
+    public AudioSource playerAttackSound;
+    private int damage;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,6 +20,14 @@ public class ClickBehaviour : MonoBehaviour
 
     private void OnMouseDown()
     {
-        gameObject.GetComponent<EnemyDataTemplate>().enemyHealth -= 1;
+        playerAttackSound.Play();
+        if (GameManager.Instance.berserkerRageActive)
+        {
+            damage = 2;
+        } else
+        {
+            damage = 1;
+        }
+        gameObject.GetComponent<EnemyDataTemplate>().enemyHealth -= damage;
     }
 }

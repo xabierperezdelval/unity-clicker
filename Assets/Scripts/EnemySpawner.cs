@@ -83,7 +83,7 @@ public class EnemySpawner : MonoBehaviour
                 GameManager.Instance.spawnedHealthBar[randomSpawnPointNumber] = Instantiate(healthBar, new Vector3(getSpawnPoint(randomSpawnPointNumber).transform.position.x, getSpawnPoint(randomSpawnPointNumber).transform.position.y + 5, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("EnemyCanvas").transform);
                 spawnPositionNumber = randomSpawnPointNumber;
                 spawnPositionsBusy[randomSpawnPointNumber] = true;
-                spawnTimer = Random.Range(6F, 11F);
+                spawnTimer = Random.Range(4F, 7F) - 0.3F;
             }
         }
         else
@@ -94,7 +94,7 @@ public class EnemySpawner : MonoBehaviour
                 GameManager.Instance.spawnedHealthBar[randomSpawnPointNumber] = Instantiate(healthBar, new Vector3(getSpawnPoint(randomSpawnPointNumber).transform.position.x, getSpawnPoint(randomSpawnPointNumber).transform.position.y + 5, 0), Quaternion.identity, GameObject.FindGameObjectWithTag("EnemyCanvas").transform);
                 spawnPositionNumber = randomSpawnPointNumber;
                 spawnPositionsBusy[randomSpawnPointNumber] = true;
-                spawnTimer = Random.Range(6F, 11F);
+                spawnTimer = Random.Range(4F, 7F) - 0.3F;
             }
         }
     }
